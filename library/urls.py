@@ -22,6 +22,8 @@ from books.api import viewsets as booksviewsets
 
 route = routers.DefaultRouter()
 route.register(r'books', booksviewsets.BooksViewSet, basename="books")
+route.register(r'empresa', booksviewsets.EmpresaViewSet, basename="empresa")
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
