@@ -35,3 +35,4 @@ class MotoboysSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Motoboys
         fields = '__all__'
+

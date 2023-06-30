@@ -20,7 +20,7 @@ from django.urls import path, include
 from rest_framework import routers
 from books.api import viewsets as booksviewsets
 
-route = routers.DefaultRouter()
+route = routers.DefaultRouter(trailing_slash=False)
 route.register(r'books', booksviewsets.BooksViewSet, basename="books")
 route.register(r'empresa', booksviewsets.EmpresaViewSet, basename="empresa")
 route.register(r'entregas', booksviewsets.EntregasViewSet, basename="entregas")
@@ -28,6 +28,7 @@ route.register(r'clientes', booksviewsets.ClientesViewSet, basename="clientes")
 route.register(r'produtos', booksviewsets.ProdutosViewSet, basename="produtos")
 route.register(r'formapgto', booksviewsets.FormaPgtoViewSet, basename="formapgto")
 route.register(r'motoboys', booksviewsets.MotoboysViewSet, basename="motoboys")
+
 
 
 urlpatterns = [

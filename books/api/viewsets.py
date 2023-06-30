@@ -1,6 +1,9 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
 from books.api import serializers
 from books import models
+from rest_framework import generics
 
 class BooksViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.BooksSerializer
@@ -30,3 +33,11 @@ class FormaPgtoViewSet(viewsets.ModelViewSet):
 class MotoboysViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.MotoboysSerializer
     queryset = models.Motoboys.objects.all()
+
+
+class FormastList(generics.ListAPIView):
+    queryset = models.FormaPgto.objects.all()
+    serializer_class = serializers.FormaPgtoSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id']
+
