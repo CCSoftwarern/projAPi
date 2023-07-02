@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from rest_framework import routers
+from appexpresso.views import cadastrar_usuario, index, logar_usuario
 from books.api import viewsets as booksviewsets
 
 route = routers.DefaultRouter(trailing_slash=False)
@@ -33,5 +34,10 @@ route.register(r'motoboys', booksviewsets.MotoboysViewSet, basename="motoboys")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include(route.urls))
+    path('v1/',include(route.urls)),
+    path('index', index, name="index"),
+    path('', logar_usuario, name="logar_usuario"),
+    path('cadastrar_usuario', cadastrar_usuario, name="cadastrar_usuario"),
+    path('index', index, name="index"),
+
 ]
