@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+
+<h1>Lista de Clientes</h1>
+
+<table>
+        <tr>
+                <th>Nome</th>
+        </tr>
+        
+{% for item in listarDados %}
+        <tr>
+                <td>{{ item }}</td>
+
+        </tr>
+{% empty %}
+        <li>Sem itens na lista.</li>
+{% endfor %}

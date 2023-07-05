@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
+from .models import FormaPgto
 # Create your views here.
 
 def cadastrar_usuario(request):
@@ -29,3 +30,8 @@ def logar_usuario(request):
 
 def index(request):
     return render(request, 'index.html')
+
+
+def exibir_tarefas_completadas(request):
+    tasks = FormaPgto.objects.all()
+    return render(request, 'appexpresso/templates/login.html', { 'tasks' : tasks })
