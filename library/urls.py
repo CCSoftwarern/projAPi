@@ -21,8 +21,10 @@ from rest_framework import routers
 from books.api import viewsets as booksviewsets
 from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
+from rest_framework.authtoken.views import obtain_auth_token
+from books.views import CustomAuthToken
 
-from books.views import cadastrar_usuario, index, logar_usuario
+from books.views import AddEntregas, cadastrar_usuario, deleterEntrega, index, logar_usuario
 
 route = routers.DefaultRouter(trailing_slash=False)
 route.register(r'books', booksviewsets.BooksViewSet, basename="books")
@@ -32,6 +34,7 @@ route.register(r'clientes', booksviewsets.ClientesViewSet, basename="clientes")
 route.register(r'produtos', booksviewsets.ProdutosViewSet, basename="produtos")
 route.register(r'formapgto', booksviewsets.FormaPgtoViewSet, basename="formapgto")
 route.register(r'motoboys', booksviewsets.MotoboysViewSet, basename="motoboys")
+route.register(r'users', booksviewsets.UserViewSet)
 
 
 
@@ -44,6 +47,11 @@ urlpatterns = [
     path('demo',TemplateView.as_view(template_name="bootstrap_base.html"),name='demo'),
     path('popovers',TemplateView.as_view(template_name="bootstrap_popovers.html"), name="popovers"),
     path('login',auth_views.LoginView.as_view(), name="login"),
-    
+    path('novaentrega',AddEntregas, name="novaentrega"),
+    path('deletarentrega/<int:ID>',deleterEntrega, name="deletarentrega"),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('auth/', include('rest_authtoken.urls')),
+    path('v1/api-token-auth', obtain_auth_token, name='api_token_auth'),
+    path('v1/detalhe/api-token-auth', CustomAuthToken.as_view())
 
 ]

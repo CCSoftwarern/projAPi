@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from books import models
+from django.contrib.auth.models import User
+
 
 class BooksSerializer(serializers.ModelSerializer):
     class Meta:
@@ -35,4 +37,11 @@ class MotoboysSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Motoboys
         fields = '__all__'
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ['url', 'username', 'email', 'is_staff']
+
+
 

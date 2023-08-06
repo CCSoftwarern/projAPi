@@ -3,6 +3,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
 from books.api import serializers
 from books import models
+from django.contrib.auth.models import User
 
 class BooksViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.BooksSerializer
@@ -16,10 +17,15 @@ class EmpresaViewSet(viewsets.ModelViewSet):
 class EntregasViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.EntregasSerializer
     queryset = models.Entregas.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['ID','STATUS']
 
 class ClientesViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ClientesSerializer
     queryset = models.Clientes.objects.all()
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_fields = ['IDPESSOA','NOME','CELULAR']
+    search_fields = ['IDPESSOA','NOME', 'CELULAR']
 
 class ProdutosViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ProdutosSerializer
@@ -29,11 +35,17 @@ class FormaPgtoViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.FormaPgtoSerializer
     queryset = models.FormaPgto.objects.all()
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['ID','DESCRICAO']
+    filterset_fields = ['ID','STATUS']
 
 class MotoboysViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.MotoboysSerializer
     queryset = models.Motoboys.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['ONLINE']
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = serializers.UserSerializer
 
 
 
