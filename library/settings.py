@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-99663(+hu%%(4^85=t9ko^$b1!tbkt@!kc*$ds&ipa%iq*z6vd'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1']
 APPEND_SLASH=False
 
@@ -86,6 +86,18 @@ DATABASES = {
     }
 }
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE' : 'djfirebirdsql',
+#        'NAME': 'C:\Users\SUPORTE\OneDrive\Área de Trabalho\projAPi\db.fdb', # Path to database or db alias
+#        'USER' : 'SYSDBA',           # Your db user
+#        'PASSWORD' : 'masterkey',    # db user password
+#        'HOST' : '127.0.0.1',        # Your host machine
+#        'PORT' : '3050',             # If is empty, use default 3050
+        #'OPTIONS' : {'charset':'ISO8859_1'}
+#    }
+#}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -122,10 +134,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = 'static'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'library\static')
+if DEBUG: 
+   STATIC_ROOT = os.path.join(BASE_DIR, '/static')
+   MEDIA_URL = '/media/'
+   MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+   STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'library/static')
 ]
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'library/static')
+] 
+#STATIC_ROOT = 'static'
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

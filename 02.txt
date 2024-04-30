@@ -1,0 +1,56 @@
+
+wget https://github.com/CCSoftwarern/projAPi/archive/refs/heads/master.zip
+unzip -q master.zip -d projAPi
+
+virtualenv ~/projAPi/projAPi-master
+source ~/projAPi/projAPi-master/bin/activate
+
+pip install djangorestframework
+pip install markdown
+pip install django-filter
+
+nano ~/projAPi/projAPi-master/library/settings.py
+
+python manage.py runserver 192.168.0.5:8000
+
+deactivate
+
+
+server {
+    server_name 187.123.68.46 http://187.123.68.46;    
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header X-Forwarded-Host $server_name;
+        proxy_set_header X-Real-IP $remote_addr;
+        add_header P3P 'CP="ALL DSP COR PSAa PSDa OUR NOR ONL UNI COM NAV"';
+    }
+}
+
+
+sudo ln -s /etc/nginx/sites-available/projAPi
+
+
+cd ~/projAPi/projAPi-master
+ source ~/projAPi/projAPi-master/bin/activate
+gunicorn -b 127.0.0.1:8000 projAPi.wsgi
+
+
+8CFDDE862F25
+
+git clone https://github.com/CCSoftwarern/projAPi.git
+
+sudo /sbin/iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8000
+
+
+Repositorio Local com Git
+git init
+git add .
+git status
+git commit -m 'Cadastro login'
+
+~/projAPi/projAPi-master$ python3 manage.py runserver 10.3.0.4:8000
+
+screen -S projAPi
+
+

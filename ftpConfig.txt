@@ -1,0 +1,31 @@
+ftpuser
+123master
+
+Usuario:django
+Senha:python
+
+sudo chown nobody:nogroup /home/api/projAPi/projAPi-master
+sudo chmod a-w /home/claudemyr/projAPi/projAPi-master
+sudo ls -la /home/claudemyr/projAPi/projAPi-master
+echo "django" | sudo tee -a /etc/vsftpd.userlist
+
+sudo chmod a-r /home/ftpuser/ftp/files/projAPi
+
+sudo chmod a+rwx,o-w projAPi
+
+sudo chmod 775 projAPi
+
+
+adduser api -shell /bin/false -home /home/api
+
+mkdir /home/api/v1
+
+sudo chmod a-r /home/api/v1
+
+sudo chmod a+rwx,o-w /home/api/v1
+
+sudo chmod 775 /home/api/v1
+
+sudo chmod a-w /home/api/v1
+
+chown -R api:api /home/api

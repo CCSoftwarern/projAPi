@@ -1,0 +1,39 @@
+{% extends 'base_principal.html' %}
+{% block conteudo %}
+ <!-- tabela -->
+<table id="test_table" class="display table table-striped table-bordered" cellspacing="0" width="100%">
+    <tbody>
+            {% for r in resultado %}
+
+            <table id="card_tb" style="width:100%">
+              <td>
+                  <div class="list-group">
+                      <a href="{% url 'confirmacao' %}" class="list-group-item list-group-item-action" aria-current="true">
+                        <div class="d-flex w-100 justify-content-between">
+                          <h5 class="mb-1">ID: {{ r.ID }}</h5>
+                          <h3><small><span class="badge badge-secondary">{{ r.DT_CADASTRO }}</span></small>
+                          </div></h3>
+                          <h4><p class="mb-1">{{ r.NM_PESSOA }}</p></h4>
+                        
+                        <small>{{ r.ENDERECO_ENTREGA }}</small>
+                        
+                      </a>
+                    </div>
+              </td>
+              </table>
+          
+            {% endfor %}
+    </tbody>
+
+</table>
+
+        <!-- End Example Code -->
+	{% endblock %}
+<!--
+           <td>{{ r.NM_PESSOA }}</td>
+              <td>{{ r.DT_CADASTRO }}</td>
+              <td>{{ r.VR_CALCULADO }}</td>
+
+              https://icons.getbootstrap.com/assets/icons/box-seam-fill.svg
+
+    -->

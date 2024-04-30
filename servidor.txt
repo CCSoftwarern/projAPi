@@ -1,0 +1,24 @@
+executar
+Precisa está em moto root
+sudo su
+
+ativar venv
+
+source .venv/bin/activate
+
+(.venv) root@ip-172-31-10-214:/home/django/ftp/files/projAPi# python3 manage.py runserver 172.31.10.214:8000
+
+
+
+Criar screen com um nome
+screen -S scremprojapi
+
+Reconectar ao screen
+screen -r scremprojapi
+
+Encerrar screen
+screen -X -S scremprojapi quit
+
+Sair do screen
+ctrl-A + d
+
