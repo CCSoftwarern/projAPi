@@ -14,17 +14,22 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django import urls
 from django.contrib import admin
 from django.urls import path, include
+from library.settings import MEDIA_ROOT
 
 from rest_framework import routers
 from books.api import viewsets as booksviewsets
 from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
 from rest_framework.authtoken.views import obtain_auth_token
-from books.views import CustomAuthToken
+from books.views import CustomAuthToken, json_teste
+from django.conf.urls.static import static
+from django.conf import settings
+import django.views.static
 
-from books.views import AddEntregas, cadastrar_usuario, deleterEntrega, index, logar_usuario
+from books.views import AddEntregas, cadastrar_usuario, deleterEntrega, index, logar_usuario,vconfirmacao
 
 route = routers.DefaultRouter(trailing_slash=False)
 route.register(r'books', booksviewsets.BooksViewSet, basename="books")
@@ -34,6 +39,7 @@ route.register(r'clientes', booksviewsets.ClientesViewSet, basename="clientes")
 route.register(r'produtos', booksviewsets.ProdutosViewSet, basename="produtos")
 route.register(r'formapgto', booksviewsets.FormaPgtoViewSet, basename="formapgto")
 route.register(r'motoboys', booksviewsets.MotoboysViewSet, basename="motoboys")
+route.register(r'meuslocais', booksviewsets.MotoboysViewSet, basename="meuslocais")
 route.register(r'users', booksviewsets.UserViewSet)
 
 
@@ -52,6 +58,8 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('auth/', include('rest_authtoken.urls')),
     path('v1/api-token-auth', obtain_auth_token, name='api_token_auth'),
-    path('v1/detalhe/api-token-auth', CustomAuthToken.as_view())
+    path('v1/detalhe/api-token-auth', CustomAuthToken.as_view()),
+    path('entregas',json_teste,name='json_teste'),
+    path('confirmacao',vconfirmacao,name='confirmacao')
 
-]
+] + static(settings.MEDIA_URL,document_root=MEDIA_ROOT)

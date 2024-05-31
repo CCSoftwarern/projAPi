@@ -1,0 +1,7 @@
+super usuario django
+user usuario = ccsoftware
+senha = 123master@
+
+insomnia
+ccsoftwarern@gmail.com
+123master@*

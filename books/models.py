@@ -1,6 +1,11 @@
 from django.db import models
 from uuid import uuid4
 
+
+
+
+
+
 # Create your models here.
 class Books(models.Model):
     id_book = models.UUIDField(primary_key=True,default=uuid4, editable=False)
@@ -11,6 +16,7 @@ class Books(models.Model):
     pages = models.IntegerField()
     publishing_company = models.CharField(max_length=255)
     create_at = models.DateField(auto_now_add=True)
+  
 
 
 class Empresa(models.Model):
@@ -67,15 +73,18 @@ class Empresa(models.Model):
     IP_IMPRESSORA_TERMICA  = models.CharField(max_length=255, null=True)
     NM_IMPRESSORA          = models.CharField(max_length=255, null=True)
 
+def upload_image_assinatura(instance, filename):
+    return f"{instance.ID}-{filename}"
+
 class Entregas(models.Model):   
-    ID                  =        models.UUIDField(primary_key=True,default=uuid4, editable=False)
+    ID                  =        models.AutoField(primary_key=True,editable=False)
     ID_TIPO_PRODUTO      =      models.CharField(max_length=38, default=0)
     NM_PRODUTO          =       models.CharField(max_length=30, default="Não selecionado")
     ID_PESSOA           =      models.CharField(max_length=38, default=0)
     NM_PESSOA           =       models.CharField(max_length=200, default="Não selecionado")
     ID_MOTOQUEIRO       =      models.CharField(max_length=38, default=0)
     NM_MOTOQUEIRO       =      models.CharField(max_length=100, default="Não selecionado")
-    DT_CADASTRO         =     models.DateTimeField(auto_now_add=True)
+    DT_CADASTRO         =     models.DateField(auto_now_add=True)
     DT_SAIDA           =      models.DateField(null=True)
     DT_ENTREGA          =     models.DateTimeField(null=True)
     ENDERECO_RETIRADA          = models.CharField(max_length=600, null=True)
@@ -85,7 +94,7 @@ class Entregas(models.Model):
     DISTANCIA_TXT               = models.CharField(max_length=30, null=True)
     VR_CALCULADO       =        models.FloatField(default=0, null=True)
     VR_POR_METRO      =         models.FloatField(default=0, null=True)
-    STATUS                      = models.CharField(max_length=1, default="S")
+    STATUS                      = models.CharField(max_length=1, default="0")
     ID_FORMA_PGTO        =     models.CharField(max_length=38, default=0)
     NM_FORMA_PGTO       =       models.CharField(max_length=30, default="Não selecionado")
     ID_EMPRESA           =    models.CharField(max_length=38, default=0)
@@ -102,36 +111,43 @@ class Entregas(models.Model):
     NM_USUARIO_ENCERRAMENTO   = models.CharField(max_length=200, default="Não informado")
     TRANSFERIDO                 = models.IntegerField(default=0, null=True)
     NM_CLIENTE                  = models.CharField(max_length=255, default='Não informado')
-    DATA_DE_CADASTRO = models.CharField(max_length=30, null=True)
-    DATA_DE_ENTREGA= models.CharField(max_length=30, null=True)
+    DATA_DE_CADASTRO           =models.DateTimeField(auto_now_add=True, null=True)
+    DATA_DE_ENTREGA            =models.DateTimeField(auto_now_add=True, null=True)
+    URL_IMAGEM                 =models.URLField(max_length=255, null=True, blank = True)
+    IMG_ASSINATURA             = models.ImageField(upload_to=upload_image_assinatura, blank=True, null=True)
+    NM_ATENDENTE               = models.CharField(max_length=200, default="Não informado")
+    IMG_ASS_BASE64              = models.TextField(null=True)
+
+def upload_image_clientes(instance, filename):
+    return f"{instance.IDPESSOA}-{filename}"
 
 class Clientes(models.Model): 
-    IDPESSOA           =  models.UUIDField(primary_key=True,default=uuid4, editable=False)
+    IDPESSOA           =  models.AutoField(primary_key=True,editable=False)
     NOME                = models.CharField(max_length=255)
     EMAIL               = models.CharField(max_length=255, null=True)
-    CPF                 = models.CharField(max_length=20, null=True)
-    CELULAR             = models.CharField(max_length=20, null=True)
+    CPF                 = models.CharField(max_length=20, null=True, unique=True)
+    CELULAR             = models.CharField(max_length=20, null=True, unique=True)
     LATITUDE            = models.CharField(max_length=20, null=True)
     LONGITUDE           = models.CharField(max_length=20, null=True)
-    ONLINE           =    models.IntegerField(default=0,    null=True)
-    TOKEN               = models.CharField(max_length=255, default='Não informado')
-    SENHA                = models.CharField(max_length=10, default='Não informado')
-    STATUS               = models.CharField(max_length=1, default='0')
-    TP_PESSOA            = models.CharField(max_length=1, default='C')
+    ONLINE           = models.CharField(max_length=100, null=True)
+    TOKEN               = models.CharField(max_length=255, null=True)
+    SENHA                = models.CharField(max_length=10, null=True)
+    STATUS               = models.CharField(max_length=1, null=True)
+    TP_PESSOA            = models.CharField(max_length=1, null=True)
     DT_TIME_ONLINE     =   models.DateTimeField(auto_now_add=True)
-    ENDERECO             = models.CharField(max_length=100, default='Não informado')
-    BAIRRO               = models.CharField(max_length=100, default='Não informado')
-    NUMERO           =   models.IntegerField(default=0, null=True)
-    COMPLEMENTO          = models.CharField(max_length=100, default='Não informado')
+    ENDERECO             = models.CharField(max_length=100, null=True)
+    BAIRRO               = models.CharField(max_length=100, null=True)
+    NUMERO           = models.CharField(max_length=100, null=True)
+    COMPLEMENTO          = models.CharField(max_length=100, null=True)
     CEP                = models.CharField(max_length=9, null=True)
-    ESTADO             = models.CharField(max_length=100, default='Não informado')
-    CIDADE             = models.CharField(max_length=100, default='Não informado')
+    ESTADO             = models.CharField(max_length=100, null=True)
+    CIDADE             = models.CharField(max_length=100, null=True)
     TP_CPF_CNPJ     =    models.IntegerField(default=0, null=True)
     TEM_CONTRATO     =    models.IntegerField(default=0, null=True)
     ID_EMPRESA        =   models.IntegerField(default=0, null=True)
     ID_USUARIO        =   models.IntegerField(default=0, null=True)
     IDMOTOQUEIRO      =  models.IntegerField(default=0, null=True)
-    TELEFONE_IMPORTADO  = models.CharField(max_length=100, default='Não informado')
+    TELEFONE_IMPORTADO  = models.CharField(max_length=100, null=True)
     PONTO_REFERENCIA    = models.CharField(max_length=100, null=True)
     OBS                = models.CharField(max_length=100, null=True)
     ID_IMPORTADO       =  models.IntegerField(default=0, null=True)
@@ -141,9 +157,13 @@ class Clientes(models.Model):
     IPCOOPERATIVA       = models.CharField(max_length=20, null=True)
     CHAVE_PIX           = models.CharField(max_length=100, null=True)
     TP_CHAVE           = models.CharField(max_length=100, null=True)
+    CK_ATIVO            =models.BooleanField(null=True)
+    ONLINE_2            =models.BooleanField(null=True)
+    NR_CELULAR2         =models.BigIntegerField(null=True)
+    FOTO = models.ImageField(upload_to=upload_image_clientes, blank=True, null=True)
 
 class Produtos (models.Model):
-    ID          =  models.UUIDField(primary_key=True,default=uuid4, editable=False)
+    ID          =  models.AutoField(primary_key=True,editable=False)
     NM_PRODUTO    = models.CharField(max_length=100)
     DESC_PRODUTO    = models.CharField(max_length=600, null=True)
     TARIFA_P_METRO  = models.FloatField(default=0)
@@ -154,19 +174,24 @@ class Produtos (models.Model):
     ATIVO_APP      = models.CharField(max_length=1, default="0")
 
 class FormaPgto (models.Model):
-    ID    =  models.UUIDField(primary_key=True,default=uuid4, editable=False)
+    ID     =  models.AutoField(primary_key=True,editable=False)
     DESCRICAO   = models.CharField(max_length=100)
     STATUS      = models.CharField(max_length=1, default="0")
     ID_EMPRESA   =  models.CharField(max_length=38, default=0)
 
+
+def upload_image_motoboy(instance, filename):
+    return f"{instance.ID_MOTOBOY}-{filename}"
     
 class Motoboys(models.Model):
-    ID   =  models.UUIDField(primary_key=True,default=uuid4, editable=False)
+    ID_MOTOBOY    =  models.AutoField(primary_key=True,editable=False)
     NOME    = models.CharField(max_length=255)
-    CELULAR  = models.CharField(max_length=20)
+    CELULAR  = models.CharField(max_length=20, unique=True)
     TOKEN = models.CharField(max_length=255)
     ONLINE = models.CharField(max_length=1, default="0")
-    FOTO = models.ImageField(null=True)
+    FOTO = models.ImageField(upload_to=upload_image_motoboy, blank=True, null=True)
+    ID_USER = models.IntegerField(default=0)
+
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
@@ -177,5 +202,15 @@ class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
+
+class MeusLocais(models.Model):
+    ID              =models.AutoField(primary_key=True,editable=False)
+    ID_PESSOA      =models.ForeignKey(Question, on_delete=models.CASCADE)
+    ENDERECO       =models.CharField(max_length=255,null=True)
+    APELIDO_LOCAL  =models.CharField(max_length=100,null=True)
+    DT_CADASTRO    =models.DateTimeField(auto_now_add=True)
+    VALOR         =models.FloatField( null=True)
+    TP             =models.CharField(max_length=1,null=True)
+
 
 
