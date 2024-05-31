@@ -116,10 +116,7 @@ class Entregas(models.Model):
     URL_IMAGEM                 =models.URLField(max_length=255, null=True, blank = True)
     IMG_ASSINATURA             = models.ImageField(upload_to=upload_image_assinatura, blank=True, null=True)
     NM_ATENDENTE               = models.CharField(max_length=200, default="Não informado")
-<<<<<<< HEAD
     IMG_ASS_BASE64              = models.TextField(null=True)
-=======
->>>>>>> a2b13ee167e27b3d7ff6a3b5c4c129550ac4b488
 
 def upload_image_clientes(instance, filename):
     return f"{instance.IDPESSOA}-{filename}"
