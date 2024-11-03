@@ -19,7 +19,7 @@ from books import models
 # Create your views here.
 
 def json_teste(request):
-    url = 'http://127.0.0.1:8000/v1/entregas'
+    url = 'http://appexpressomoto2.ddns.net:8000/v1/entregas'
     headers={'Content-Type': 'application/json'}
     response = requests.get(url, headers=headers)
     response = json.loads(response.content)
