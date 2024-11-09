@@ -26,6 +26,27 @@
     </div>
   </nav>
 
+  {% block conteudo %}
+  <table id="test_table" class="display table table-striped table-bordered" cellspacing="0" width="100%">
+    <tbody>
+            {% for r in resultado %}
+            <table id="card_tb" style="width:100%">
+              <td>
+                <div class="container">
+                  <a href="{% url 'confirmacao' %}" class="list-group-item list-group-item-action" aria-current="true"></a>
+                  <img src='{{ r.URL_IMAGEM }}' alt="Avatar" style="width:90px">
+                  <p><span>{{ r.NM_PESSOA }}</span> CEO at Mighty Schools.</p>
+                  <p>{{ r.ENDERECO_ENTREGA }}</p>
+                </div>
+              </td>
+              </table>
+          
+            {% endfor %}
+    </tbody>
+
+</table>
+
+  {% endblock %}
 
 
 <!-- Footer -->

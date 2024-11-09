@@ -28,6 +28,8 @@ from books.views import CustomAuthToken, json_teste
 from django.conf.urls.static import static
 from django.conf import settings
 import django.views.static
+from books.views import EnviarEmailView
+
 
 from books.views import AddEntregas, cadastrar_usuario, deleterEntrega, index, logar_usuario,vconfirmacao
 
@@ -60,6 +62,7 @@ urlpatterns = [
     path('v1/api-token-auth', obtain_auth_token, name='api_token_auth'),
     path('v1/detalhe/api-token-auth', CustomAuthToken.as_view()),
     path('entregas',json_teste,name='json_teste'),
-    path('confirmacao',vconfirmacao,name='confirmacao')
+    path('confirmacao',vconfirmacao,name='confirmacao'),
+    path('enviar-email/', EnviarEmailView.as_view(), name='enviar-email'),
 
 ] + static(settings.MEDIA_URL,document_root=MEDIA_ROOT)

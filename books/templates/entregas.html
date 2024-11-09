@@ -4,10 +4,6 @@
 <table id="test_table" class="display table table-striped table-bordered" cellspacing="0" width="100%">
     <tbody>
             {% for r in resultado %}
-
-
-            
-
             <table id="card_tb" style="width:100%">
               <td>
                 <div class="container">
@@ -16,7 +12,6 @@
                   <p><span>{{ r.NM_PESSOA }}</span> CEO at Mighty Schools.</p>
                   <p>{{ r.ENDERECO_ENTREGA }}</p>
                 </div>
-
               </td>
               </table>
           
@@ -24,16 +19,6 @@
     </tbody>
 
 </table>
-
-
-
         <!-- End Example Code -->
-	{% endblock %}
-<!--
-           <td>{{ r.NM_PESSOA }}</td>
-              <td>{{ r.DT_CADASTRO }}</td>
-              <td>{{ r.VR_CALCULADO }}</td>
+{% endblock %}
 
-              https://icons.getbootstrap.com/assets/icons/box-seam-fill.svg
-
-    -->

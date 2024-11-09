@@ -13,10 +13,53 @@ from django.contrib import messages
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from django.core.mail import send_mail
+from django.conf import settings
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.template.loader import render_to_string
 
 from books import models
 
-# Create your views here.
+
+class EnviarEmailView(APIView):
+  def post(self, request):
+        # Obter os dados da requisição
+        destinatario = request.data.get('destinatario')
+        nome = request.data.get('nome')
+        assunto = request.data.get('assunto')
+        mensagem = request.data.get('mensagem')
+
+        # Contexto para o template
+        context = {
+            'nome': nome,
+            'assunto': assunto,
+            'mensagem': mensagem
+        }
+
+        # Renderizando o corpo do e-mail com o template HTML
+        corpo_html = render_to_string('email_template.html', context)
+
+        # Se quiser também enviar uma versão de texto simples, renderize o template de texto
+        #corpo_texto = render_to_string('email_template.txt', context)
+
+        try:
+            # Enviar e-mail com HTML e versão texto
+            send_mail(
+                assunto,  # Assunto
+                corpo_html,  # Corpo do e-mail em texto simples
+                settings.EMAIL_HOST_USER,  # Remetente
+                [destinatario],  # Destinatário(s)
+                fail_silently=False,  # Lançar erro se falhar
+                html_message=corpo_html  # Corpo do e-mail em HTML
+            )
+            return Response({"message": "E-mail enviado com sucesso!"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"message": f"Erro ao enviar e-mail: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 
 def json_teste(request):
     url = 'http://appexpressomoto2.ddns.net:8000/v1/entregas'
@@ -29,7 +72,7 @@ def json_teste(request):
     context = {}
     context['resultado'] = resultado
 
-    return render(request, 'entregas.html', context)
+    return render(request, 'base_principal.html', context)
 
 
 def my_view(request):
