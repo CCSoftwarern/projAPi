@@ -31,12 +31,39 @@ class EnviarEmailView(APIView):
         nome = request.data.get('nome')
         assunto = request.data.get('assunto')
         mensagem = request.data.get('mensagem')
+        tipo= request.data.get('tipo')
+        codigo= request.data.get('codigo')
+        valor= request.data.get('valor')
+        coleta= request.data.get('coleta')
+        entrega= request.data.get('entrega')
+        obs= request.data.get('obs')
+        msm_promo= request.data.get('msm_promo')
+        dt_solicitacao =request.data.get('dt_solicitacao') 
+        msm_stratus = request.data.get('msm_stratus')
+        icone =  request.data.get('icone')
+        motoboy = request.data.get('motoboy')
+        atendente = request.data.get('atendente')
+        forma_pgto = request.data.get('forma_pgto')
 
         # Contexto para o template
         context = {
             'nome': nome,
             'assunto': assunto,
-            'mensagem': mensagem
+            'mensagem': mensagem,
+            'tipo':tipo,
+            'codigo':codigo,
+            'valor':valor,
+            'coleta':coleta,
+            'entrega':entrega,
+            'obs':obs,
+            'msm_promo':msm_promo,
+            'dt_solicitacao':dt_solicitacao,
+            'msm_stratus':msm_stratus,
+            'icone':icone,
+            'motoboy':motoboy,
+            'atendente':atendente,
+            'forma_pgto':forma_pgto
+
         }
 
         # Renderizando o corpo do e-mail com o template HTML
